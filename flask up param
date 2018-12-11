@@ -1,0 +1,19 @@
+import flask, json
+from flask import request
+
+server = flask.Flask(__name__)
+
+
+@server.route('/login', methods=['get', 'post'])
+def login():
+    text1 = request.values.get('info1')
+    text2 = request.values.get('info2')
+    if text1!='' and text2!='':
+        resu = {'text1': text1, 'text2': text2}
+        return json.dumps(resu, ensure_ascii=False)  # 将字典转换为json串, json是字符串
+    else:
+        resu = {'code': 10001, 'message': '参数不能为空！'}
+        return json.dumps(resu, ensure_ascii=False)
+
+if __name__ == '__main__':
+    server.run(debug=True, port=8888, host='0.0.0.0')  #
